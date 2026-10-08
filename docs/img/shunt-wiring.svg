@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 455" width="820" height="455" role="img" aria-label="Wiring for the battery monitor: a fused positive wire feeds the buck converter, the buck powers the ESP32 by USB, the ESP32 powers and reads the INA226, and a twisted pair runs from the INA226 to the two sense screws on the shunt. The INA226 VBS pin is left empty.">
+<style><![CDATA[
+/* Layout: a shop drawing sheet. One wide scaled drawing first, then the battery-top plan, then cable and check lists. */
+:root {
+  --bg: #eef1f0;
+  --panel: #fbfcfc;
+  --ink: #1b2a30;
+  --muted: #5a6b72;
+  --line: #c3cdd0;
+  --stud: #dfe5e4;
+  --wood: #e9dcc0;
+  --batt: #d5dbdd;
+  --ctrl: #1f6fb5;
+  --on-ctrl: #ffffff;
+  --pos: #c8322b;
+  --neg: #26343a;
+  --pv: #b77a00;
+  --brass: #c79a2e;
+  --sig: #6b4fa8;
+  --sense: #0f7d74;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Barlow", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141c20; --panel: #1c272c; --ink: #e3eaec; --muted: #9aabb1; --line: #38474d;
+    --stud: #222e33; --wood: #4a4234; --batt: #35434a; --ctrl: #3d8fd6; --on-ctrl: #ffffff;
+    --pos: #ee6a60; --neg: #c9d4d8; --pv: #e3ab3a; --brass: #d8b04f; --sig: #b39cf0; --sense: #4cc9bd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141c20; --panel: #1c272c; --ink: #e3eaec; --muted: #9aabb1; --line: #38474d;
+  --stud: #222e33; --wood: #4a4234; --batt: #35434a; --ctrl: #3d8fd6; --on-ctrl: #ffffff;
+  --pos: #ee6a60; --neg: #c9d4d8; --pv: #e3ab3a; --brass: #d8b04f; --sig: #b39cf0; --sense: #4cc9bd;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.sheet { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 2.3rem; line-height: 1.05; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; margin: 0; letter-spacing: 0.02em; text-wrap: balance; }
+p { margin: 0; max-width: 65ch; }
+.sub { color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.draw { background: var(--panel); border: 1px solid var(--line); overflow-x: auto; }
+.draw svg { display: block; height: auto; color: var(--ink); }
+.draw svg.wide { width: 100%; min-width: 780px; }
+.draw svg.plan { width: 100%; min-width: 540px; max-width: 720px; margin: 0 auto; }
+figcaption { color: var(--muted); font-size: 0.95rem; max-width: 70ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.9rem; color: var(--muted); list-style: none; padding: 0; margin: 0; }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.sw { display: inline-block; width: 26px; height: 0; border-top: 4px solid var(--neg); }
+.sw.pos { border-color: var(--pos); } .sw.pv { border-color: var(--pv); border-top-width: 2px; } .sw.thin { border-top-width: 2px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+ul.checks { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; max-width: 70ch; }
+
+/* drawing marks */
+svg text { font-family: var(--body); font-size: 11.5px; fill: currentColor; }
+svg text.dim { font-family: var(--mono); font-size: 11px; }
+svg text.vt { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; }
+svg text.small { font-size: 10px; }
+svg text.onctrl { fill: var(--on-ctrl); font-weight: 600; }
+svg text.pm { font-size: 14px; font-weight: 600; }
+.stud { fill: var(--stud); }
+.board { fill: var(--wood); stroke: currentColor; stroke-width: 1; }
+.batt { fill: var(--batt); stroke: currentColor; stroke-width: 1; }
+.frame { fill: var(--panel); stroke: currentColor; stroke-width: 1; }
+.box { fill: var(--panel); stroke: currentColor; stroke-width: 1.2; }
+.ctrl { fill: var(--ctrl); stroke: currentColor; stroke-width: 1; }
+.brass { fill: var(--brass); stroke: currentColor; stroke-width: 0.8; }
+.ppos { fill: var(--pos); } .pneg { fill: var(--neg); } .pn { fill: var(--muted); }
+.wall { stroke: currentColor; stroke-width: 2.5; fill: none; }
+.thinline { stroke: currentColor; stroke-width: 1; fill: none; }
+.lead { stroke: var(--muted); stroke-width: 0.8; fill: none; }
+.cpos { stroke: var(--pos); fill: none; stroke-width: 4.5; stroke-linecap: round; }
+.cneg { stroke: var(--neg); fill: none; stroke-width: 4.5; stroke-linecap: round; }
+.cpv { stroke: var(--pv); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.t { stroke-width: 2.4; }
+.csig { stroke: var(--sig); fill: none; stroke-width: 2.2; stroke-linecap: round; }
+.csense { stroke: var(--sense); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.jn { fill: var(--pos); }
+.draw svg.wire { width: 100%; min-width: 760px; }
+.screw { fill: var(--panel); stroke: currentColor; stroke-width: 1; }
+
+svg{color:var(--ink);font-family:var(--body)}
+]]></style>
+<rect width="100%" height="100%" fill="var(--panel)"/>
+          <!-- battery bank -->
+          <rect class="batt" x="30" y="110" width="120" height="140"/>
+          <text x="90" y="176" text-anchor="middle" style="font-weight:600">Battery bank</text>
+          <text x="90" y="192" text-anchor="middle">12 V</text>
+          <text x="156" y="172">B1 +</text>
+          <text x="100" y="288">B4 −</text>
+
+          <!-- shunt -->
+          <path class="cneg" d="M90,256 V332"/>
+          <path class="cneg" d="M270,348 V420"/>
+          <rect class="brass" x="70" y="331" width="220" height="18"/>
+          <circle class="screw" cx="90" cy="340" r="8"/><circle class="screw" cx="270" cy="340" r="8"/>
+          <text x="180" y="324" text-anchor="middle" style="font-weight:600">shunt</text>
+          <text class="small" x="90" y="366" text-anchor="middle">battery side</text>
+          <text class="small" x="284" y="366">system side</text>
+          <text x="270" y="438" text-anchor="middle">to inverter − and controller −</text>
+
+          <!-- fused positive feed -->
+          <path class="cpos t" d="M150,150 H200"/>
+          <path class="cpos t" d="M250,150 H340"/>
+          <rect class="box" x="200" y="140" width="50" height="20"/>
+          <text class="dim" x="225" y="154" text-anchor="middle">2 A</text>
+          <text class="small" x="225" y="132" text-anchor="middle">fuse near the post</text>
+          <circle class="ppos" cx="150" cy="150" r="6"/>
+          <circle class="pneg" cx="90" cy="250" r="6"/>
+
+
+          <!-- buck converter -->
+          <rect class="box" x="340" y="100" width="130" height="90"/>
+          <text x="405" y="120" text-anchor="middle" style="font-weight:600">Buck converter</text>
+          <text class="small" x="405" y="134" text-anchor="middle">12 V in, 5 V USB out</text>
+          <text class="small" x="347" y="154">red</text>
+          <text class="small" x="347" y="179">black</text>
+          <path class="cneg t" d="M340,175 H305 V340 H279"/>
+          <path class="thinline" d="M470,125 H532" style="stroke-width:3"/>
+          <text class="small" x="501" y="117" text-anchor="middle">USB, 5 V</text>
+
+          <!-- ESP32 -->
+          <rect class="box" x="540" y="90" width="240" height="70"/>
+          <rect class="box" x="532" y="117" width="12" height="16"/>
+          <text x="660" y="116" text-anchor="middle" style="font-weight:600">ESP32</text>
+          <text class="small" x="550" y="129">USB</text>
+          <text class="dim" x="570" y="153" text-anchor="middle">3V3</text>
+          <text class="dim" x="620" y="153" text-anchor="middle">GND</text>
+          <text class="dim" x="670" y="153" text-anchor="middle">21</text>
+          <text class="dim" x="720" y="153" text-anchor="middle">22</text>
+
+          <!-- links ESP32 to INA226 -->
+          <path class="cpos t" d="M570,160 V250"/>
+          <path class="cneg t" d="M620,160 V250"/>
+          <path class="csig" d="M670,160 V250"/>
+          <path class="csig" d="M720,160 V250"/>
+
+          <!-- INA226 -->
+          <rect class="box" x="540" y="250" width="240" height="70"/>
+          <text class="dim" x="570" y="265" text-anchor="middle">VCC</text>
+          <text class="dim" x="620" y="265" text-anchor="middle">GND</text>
+          <text class="dim" x="670" y="265" text-anchor="middle">SDA</text>
+          <text class="dim" x="720" y="265" text-anchor="middle">SCL</text>
+          <text x="660" y="290" text-anchor="middle" style="font-weight:600">INA226, R100 removed</text>
+          <text class="dim" x="580" y="312" text-anchor="middle">IN+</text>
+          <text class="dim" x="640" y="312" text-anchor="middle">IN−</text>
+          <text class="dim" x="740" y="312" text-anchor="middle">VBS</text>
+          <path d="M732,326 l16,16 M748,326 l-16,16" stroke="var(--pos)" stroke-width="2.5" fill="none"/>
+          <text x="740" y="358" text-anchor="middle" style="fill:var(--pos);font-weight:600">leave empty</text>
+
+          <!-- sense pair -->
+          <path class="csense" d="M580,320 V392 H140 V344"/>
+          <path class="csense" d="M640,320 V380 H220 V344"/>
+          <circle class="screw" cx="140" cy="340" r="4"/><circle class="screw" cx="220" cy="340" r="4"/>
+          <text x="430" y="409" text-anchor="middle">sense wires, 22 AWG twisted pair</text>
+        </svg>

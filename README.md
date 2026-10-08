@@ -4,7 +4,15 @@ Firmware releases for Solar Monitor, an ESP32 board that reads a Victron
 SmartSolar charge controller over Bluetooth and shows its battery voltage,
 charge current, solar power and history on a web page on your local network.
 
-This repository only publishes firmware. The source is kept elsewhere.
+This repository publishes the firmware and the wiring drawings. The source is
+kept elsewhere.
+
+## Wiring
+
+[docs/WIRING.md](docs/WIRING.md) shows how a system goes together: an example
+wall layout, the battery connections, and the wiring for the monitor itself.
+Two parts of it are optional - a battery shunt with its sensor board, which
+adds battery current, load and amp-hours, and an XY-series power supply.
 
 ## Updating a board
 

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" width="720" height="360" role="img" aria-label="Wiring between the supply's 4-pin port and the ESP32: ground to ground, TXD to GPIO16 through a 1k and 2k divider, GPIO17 to RXD through 1k, and the 5V wire left unconnected.">
+<style><![CDATA[
+/* Layout: one reading column like a bench instruction sheet; the wiring figure is
+   the only wide element and scrolls inside its own frame on a phone. */
+:root{
+  --bg:#f3f5f7; --panel:#ffffff; --fg:#1a2129; --mut:#5b6672; --line:#d5dbe2;
+  --sig:#0b6f8a;      /* data wires and the divider */
+  --warn:#b4421c;     /* the wire that stays off */
+  --warnbg:#fbeee8;
+  --display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#12171c; --panel:#1b2229; --fg:#e7ebef; --mut:#9aa6b2; --line:#303a44;
+  --sig:#4fb8d4; --warn:#ef8a63; --warnbg:#33211a; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#12171c; --panel:#1b2229; --fg:#e7ebef; --mut:#9aa6b2; --line:#303a44;
+  --sig:#4fb8d4; --warn:#ef8a63; --warnbg:#33211a; color-scheme:dark }
+
+body{background:var(--bg);color:var(--fg);font:17px/1.55 var(--body)}
+.page{max-width:46rem;margin:0 auto;padding-block:32px 56px;padding-inline:18px;
+  display:flex;flex-direction:column;gap:28px}
+h1,h2{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:2.1rem}
+h2{font-size:1.45rem;padding-top:6px;border-top:2px solid var(--fg)}
+.lede{color:var(--mut);margin:8px 0 0;max-width:38rem}
+section{display:flex;flex-direction:column;gap:12px}
+p{margin:0;max-width:40rem}
+ul{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:6px;max-width:40rem}
+code,.pin{font-family:var(--mono);font-size:.86em;background:var(--panel);
+  border:1px solid var(--line);border-radius:4px;padding:1px 5px;white-space:nowrap}
+.stop{background:var(--warnbg);border-left:4px solid var(--warn);padding:12px 14px;max-width:40rem}
+.stop b{color:var(--warn)}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:2.4rem 1fr;gap:0 10px}
+ol.steps>li::before{content:counter(s);font:600 1.5rem/1.2 var(--display);color:var(--sig)}
+ol.steps>li>div{min-width:0;display:flex;flex-direction:column;gap:8px}
+ol.steps h3{font:600 1.15rem/1.3 var(--display);margin:0}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.frame{background:var(--panel);border:1px solid var(--line);overflow-x:auto;padding:10px}
+.frame svg{display:block;width:100%;min-width:640px;height:auto;color:var(--fg)}
+figcaption{color:var(--mut);font-size:.93rem;max-width:40rem}
+table{border-collapse:collapse;font-size:.97rem;width:100%;max-width:40rem}
+th,td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .8rem var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+.tw{overflow-x:auto}
+
+svg{color:var(--fg)}
+]]></style>
+<rect width="100%" height="100%" fill="var(--panel)"/>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0L10 5L0 10z" fill="var(--sig)"/></marker>
+      </defs>
+      <g font-family="Source Sans 3, Segoe UI, sans-serif" font-size="13" fill="currentColor">
+        <!-- the two boards -->
+        <rect x="20" y="40" width="170" height="290" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="105" y="14" text-anchor="middle" font-weight="600">Power supply</text>
+        <text x="105" y="31" text-anchor="middle">port the WiFi board used</text>
+        <rect x="550" y="40" width="150" height="290" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="625" y="28" text-anchor="middle" font-weight="600">ESP32</text>
+
+        <g font-family="JetBrains Mono, Consolas, monospace" font-size="13">
+          <text x="178" y="85" text-anchor="end">5V</text>
+          <text x="178" y="155" text-anchor="end">GND</text>
+          <text x="178" y="225" text-anchor="end">TXD</text>
+          <text x="178" y="295" text-anchor="end">RXD</text>
+          <text x="562" y="85">5V / VIN</text>
+          <text x="562" y="155">GND</text>
+          <text x="562" y="225">GPIO16</text>
+          <text x="562" y="295">GPIO17</text>
+        </g>
+
+        <!-- 5V: stays off -->
+        <line x1="190" y1="80" x2="300" y2="80" stroke="var(--warn)" stroke-width="2" stroke-dasharray="6 5"/>
+        <path d="M306 72l16 16M322 72l-16 16" stroke="var(--warn)" stroke-width="2.5" fill="none"/>
+        <text x="334" y="85" fill="var(--warn)" font-weight="600">leave unconnected, tape the end</text>
+
+        <!-- ground -->
+        <line x1="190" y1="150" x2="550" y2="150" stroke="currentColor" stroke-width="2"/>
+        <text x="250" y="142">ground to ground</text>
+
+        <!-- TXD -> 1k -> node -> GPIO16, node -> 2k -> GND -->
+        <line x1="190" y1="220" x2="270" y2="220" stroke="var(--sig)" stroke-width="2"/>
+        <rect x="270" y="210" width="64" height="20" fill="var(--panel)" stroke="var(--sig)" stroke-width="2"/>
+        <text x="302" y="225" text-anchor="middle" font-weight="600">1 kΩ</text>
+        <line x1="334" y1="220" x2="548" y2="220" stroke="var(--sig)" stroke-width="2" marker-end="url(#ah)"/>
+        <circle cx="420" cy="220" r="4" fill="var(--sig)"/>
+        <line x1="420" y1="220" x2="420" y2="204" stroke="var(--sig)" stroke-width="2"/>
+        <rect x="398" y="170" width="44" height="34" fill="var(--panel)" stroke="var(--sig)" stroke-width="2"/>
+        <text x="420" y="192" text-anchor="middle" font-weight="600">2 kΩ</text>
+        <line x1="420" y1="170" x2="420" y2="150" stroke="var(--sig)" stroke-width="2"/>
+        <circle cx="420" cy="150" r="4" fill="currentColor"/>
+        <text x="456" y="212">data to the ESP32</text>
+
+        <!-- GPIO17 -> 1k -> RXD -->
+        <line x1="550" y1="290" x2="334" y2="290" stroke="var(--sig)" stroke-width="2"/>
+        <rect x="270" y="280" width="64" height="20" fill="var(--panel)" stroke="var(--sig)" stroke-width="2"/>
+        <text x="302" y="295" text-anchor="middle" font-weight="600">1 kΩ</text>
+        <line x1="270" y1="290" x2="192" y2="290" stroke="var(--sig)" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="456" y="282">data to the supply</text>
+      </g>
+    </svg>

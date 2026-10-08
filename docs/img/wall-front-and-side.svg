@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 700" width="810" height="700" role="img" aria-label="Front and side views of the wall: batteries on a 12 inch platform, charge controller 6 inches above the battery tops, inverter above the controller, PV disconnect and electronics at the top of the board.">
+<style><![CDATA[
+/* Layout: a shop drawing sheet. One wide scaled drawing first, then the battery-top plan, then cable and check lists. */
+:root {
+  --bg: #eef1f0;
+  --panel: #fbfcfc;
+  --ink: #1b2a30;
+  --muted: #5a6b72;
+  --line: #c3cdd0;
+  --stud: #dfe5e4;
+  --wood: #e9dcc0;
+  --batt: #d5dbdd;
+  --ctrl: #1f6fb5;
+  --on-ctrl: #ffffff;
+  --pos: #c8322b;
+  --neg: #26343a;
+  --pv: #b77a00;
+  --brass: #c79a2e;
+  --sig: #6b4fa8;
+  --sense: #0f7d74;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Barlow", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141c20; --panel: #1c272c; --ink: #e3eaec; --muted: #9aabb1; --line: #38474d;
+    --stud: #222e33; --wood: #4a4234; --batt: #35434a; --ctrl: #3d8fd6; --on-ctrl: #ffffff;
+    --pos: #ee6a60; --neg: #c9d4d8; --pv: #e3ab3a; --brass: #d8b04f; --sig: #b39cf0; --sense: #4cc9bd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141c20; --panel: #1c272c; --ink: #e3eaec; --muted: #9aabb1; --line: #38474d;
+  --stud: #222e33; --wood: #4a4234; --batt: #35434a; --ctrl: #3d8fd6; --on-ctrl: #ffffff;
+  --pos: #ee6a60; --neg: #c9d4d8; --pv: #e3ab3a; --brass: #d8b04f; --sig: #b39cf0; --sense: #4cc9bd;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+.sheet { max-width: 980px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 2.3rem; line-height: 1.05; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; margin: 0; letter-spacing: 0.02em; text-wrap: balance; }
+p { margin: 0; max-width: 65ch; }
+.sub { color: var(--muted); }
+section { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+figure { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.draw { background: var(--panel); border: 1px solid var(--line); overflow-x: auto; }
+.draw svg { display: block; height: auto; color: var(--ink); }
+.draw svg.wide { width: 100%; min-width: 780px; }
+.draw svg.plan { width: 100%; min-width: 540px; max-width: 720px; margin: 0 auto; }
+figcaption { color: var(--muted); font-size: 0.95rem; max-width: 70ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.9rem; color: var(--muted); list-style: none; padding: 0; margin: 0; }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.sw { display: inline-block; width: 26px; height: 0; border-top: 4px solid var(--neg); }
+.sw.pos { border-color: var(--pos); } .sw.pv { border-color: var(--pv); border-top-width: 2px; } .sw.thin { border-top-width: 2px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+ul.checks { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; max-width: 70ch; }
+
+/* drawing marks */
+svg text { font-family: var(--body); font-size: 11.5px; fill: currentColor; }
+svg text.dim { font-family: var(--mono); font-size: 11px; }
+svg text.vt { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; }
+svg text.small { font-size: 10px; }
+svg text.onctrl { fill: var(--on-ctrl); font-weight: 600; }
+svg text.pm { font-size: 14px; font-weight: 600; }
+.stud { fill: var(--stud); }
+.board { fill: var(--wood); stroke: currentColor; stroke-width: 1; }
+.batt { fill: var(--batt); stroke: currentColor; stroke-width: 1; }
+.frame { fill: var(--panel); stroke: currentColor; stroke-width: 1; }
+.box { fill: var(--panel); stroke: currentColor; stroke-width: 1.2; }
+.ctrl { fill: var(--ctrl); stroke: currentColor; stroke-width: 1; }
+.brass { fill: var(--brass); stroke: currentColor; stroke-width: 0.8; }
+.ppos { fill: var(--pos); } .pneg { fill: var(--neg); } .pn { fill: var(--muted); }
+.wall { stroke: currentColor; stroke-width: 2.5; fill: none; }
+.thinline { stroke: currentColor; stroke-width: 1; fill: none; }
+.lead { stroke: var(--muted); stroke-width: 0.8; fill: none; }
+.cpos { stroke: var(--pos); fill: none; stroke-width: 4.5; stroke-linecap: round; }
+.cneg { stroke: var(--neg); fill: none; stroke-width: 4.5; stroke-linecap: round; }
+.cpv { stroke: var(--pv); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.t { stroke-width: 2.4; }
+.csig { stroke: var(--sig); fill: none; stroke-width: 2.2; stroke-linecap: round; }
+.csense { stroke: var(--sense); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.jn { fill: var(--pos); }
+.draw svg.wire { width: 100%; min-width: 760px; }
+.screw { fill: var(--panel); stroke: currentColor; stroke-width: 1; }
+
+svg{color:var(--ink);font-family:var(--body)}
+]]></style>
+<rect width="100%" height="100%" fill="var(--panel)"/>
+          <text class="vt" x="95" y="20">FRONT VIEW, FACING THE WALL</text>
+          <text class="vt" x="465" y="20">SIDE VIEW</text>
+
+          <!-- FRONT VIEW: origin = back corner at floor, 10 units per inch -->
+          <g transform="translate(95,650)">
+            <rect class="stud" x="0" y="-590" width="15" height="590"/>
+            <rect class="stud" x="65" y="-590" width="15" height="590"/>
+            <rect class="stud" x="225" y="-590" width="15" height="590"/>
+            <line class="wall" x1="0" y1="0" x2="0" y2="-600"/>
+            <line class="thinline" x1="240" y1="0" x2="240" y2="-600" stroke-dasharray="5 4"/>
+            <text x="2" y="-608">back corner</text>
+            <text x="240" y="-608" text-anchor="end">door frame</text>
+            <line class="thinline" x1="-20" y1="0" x2="262" y2="0"/>
+
+            <!-- board -->
+            <rect class="board" x="0" y="-550" width="240" height="330"/>
+            <circle class="screw" cx="72" cy="-240" r="2.6"/><circle class="screw" cx="72" cy="-340" r="2.6"/><circle class="screw" cx="72" cy="-538" r="2.6"/>
+            <circle class="screw" cx="232" cy="-240" r="2.6"/><circle class="screw" cx="232" cy="-340" r="2.6"/><circle class="screw" cx="232" cy="-538" r="2.6"/>
+
+            <!-- platform -->
+            <rect class="frame" x="0" y="-85" width="15" height="85"/>
+            <rect class="frame" x="225" y="-85" width="15" height="85"/>
+            <rect class="frame" x="0" y="-120" width="240" height="35"/>
+            <text x="120" y="-98" text-anchor="middle">platform, 2x4 and plywood</text>
+
+            <!-- batteries -->
+            <rect class="batt" x="0" y="-210" width="60" height="90"/>
+            <rect class="batt" x="60" y="-210" width="60" height="90"/>
+            <rect class="batt" x="120" y="-210" width="60" height="90"/>
+            <rect class="batt" x="180" y="-210" width="60" height="90"/>
+            <text x="30" y="-160" text-anchor="middle">B1</text><text x="90" y="-160" text-anchor="middle">B2</text>
+            <text x="150" y="-160" text-anchor="middle">B3</text><text x="210" y="-160" text-anchor="middle">B4</text>
+            <rect class="ppos" x="26" y="-217" width="8" height="7"/>
+            <rect class="pn" x="86" y="-217" width="8" height="7"/>
+            <rect class="pn" x="146" y="-217" width="8" height="7"/>
+            <rect class="pneg" x="206" y="-217" width="8" height="7"/>
+
+            <!-- PV wiring (flat on the board, behind plugs) -->
+            <path class="cpv" d="M195,-600 V-535"/>
+            <path class="cpv" d="M195,-475 V-468 H222 V-248 H115 V-270"/>
+            <text x="189" y="-590" text-anchor="end">from panels</text>
+
+            <!-- components -->
+            <rect class="box" x="20" y="-520" width="110" height="40"/>
+            <text class="small" x="75" y="-504" text-anchor="middle">ESP32 + sensor board</text>
+            <text class="small" x="75" y="-491" text-anchor="middle">buck converter</text>
+
+            <rect class="box" x="180" y="-535" width="30" height="60"/>
+            <line class="lead" x1="210" y1="-505" x2="258" y2="-505"/>
+            <text x="262" y="-501">PV disconnect</text>
+
+            <rect class="box" x="35" y="-460" width="180" height="100"/>
+            <text x="125" y="-415" text-anchor="middle" style="font-weight:600">Inverter 1500 W</text>
+            <text x="125" y="-400" text-anchor="middle">18 x 10 in, long side level</text>
+            <text class="small" x="41" y="-368">DC end</text>
+            <text class="small" x="209" y="-368" text-anchor="end">outlets face door</text>
+
+            <rect class="ctrl" x="63.5" y="-320" width="73" height="50"/>
+            <text class="onctrl" x="100" y="-299" text-anchor="middle">MPPT</text>
+            <text class="onctrl" x="100" y="-285" text-anchor="middle">100/50</text>
+
+            <rect class="box" x="20" y="-300" width="20" height="50"/>
+            <line class="lead" x1="20" y1="-275" x2="-8" y2="-275"/>
+            <text x="-12" y="-271" text-anchor="end">150 A fuse</text>
+
+            <!-- heavy cables -->
+            <path class="cpos" d="M35,-425 C6,-425 6,-330 30,-300"/>
+            <path class="cpos" d="M30,-250 C46,-240 44,-226 30,-217"/>
+            <path class="cneg" d="M35,-395 C20,-395 18,-358 38,-348 L138,-334 C150,-332 154,-322 157,-308 L177,-227"/>
+            <!-- controller leads -->
+            <path class="cpos t" d="M88,-270 C88,-245 40,-245 32,-219"/>
+            <path class="cneg t" d="M100,-270 C100,-240 150,-226 175,-226"/>
+
+            <!-- shunt -->
+            <rect class="brass" x="175" y="-229" width="35" height="8"/>
+            <line class="lead" x1="210" y1="-225" x2="258" y2="-225"/>
+            <text x="262" y="-221">shunt, bolted to B4 −</text>
+
+            <!-- width dimension -->
+            <line class="thinline" x1="0" y1="18" x2="240" y2="18"/>
+            <line class="thinline" x1="0" y1="12" x2="0" y2="24"/><line class="thinline" x1="240" y1="12" x2="240" y2="24"/>
+            <text class="dim" x="120" y="36" text-anchor="middle">24 in</text>
+          </g>
+
+          <!-- SIDE VIEW: origin = wall face at floor -->
+          <g transform="translate(500,650)">
+            <rect class="stud" x="-35" y="-600" width="35" height="600"/>
+            <line class="wall" x1="0" y1="0" x2="0" y2="-600"/>
+            <text class="small" x="-17" y="-608" text-anchor="middle">stud</text>
+            <line class="thinline" x1="-45" y1="0" x2="150" y2="0"/>
+
+            <rect class="board" x="0" y="-550" width="7.5" height="330"/>
+
+            <rect class="frame" x="0" y="-85" width="15" height="85"/>
+            <rect class="frame" x="115" y="-85" width="15" height="85"/>
+            <rect class="frame" x="0" y="-120" width="130" height="35"/>
+
+            <rect class="batt" x="0" y="-210" width="110" height="90"/>
+            <text x="55" y="-160" text-anchor="middle">batteries</text>
+            <text class="pm" x="15" y="-190" text-anchor="middle">−</text>
+            <text class="pm" x="95" y="-190" text-anchor="middle">+</text>
+            <rect class="pneg" x="11" y="-217" width="8" height="7"/>
+            <rect class="ppos" x="91" y="-217" width="8" height="7"/>
+            <rect class="brass" x="10" y="-229" width="10" height="8"/>
+
+            <rect class="box" x="7.5" y="-535" width="40" height="60"/>
+            <text x="54" y="-501">disconnect</text>
+            <rect class="box" x="7.5" y="-460" width="40" height="100"/>
+            <text x="54" y="-406">inverter</text>
+            <rect class="ctrl" x="7.5" y="-320" width="28" height="50"/>
+            <text x="42" y="-291">controller</text>
+
+            <path class="cpos" d="M14,-250 C50,-252 98,-252 97,-219"/>
+            <path class="cpos t" d="M24,-270 C24,-236 80,-238 92,-219"/>
+            <path class="cneg t" d="M18,-270 L15,-230"/>
+
+            <!-- height scale -->
+            <line class="thinline" x1="150" y1="0" x2="150" y2="-550"/>
+            <g class="thinline">
+              <line x1="144" y1="0" x2="156" y2="0"/><line x1="144" y1="-120" x2="156" y2="-120"/>
+              <line x1="144" y1="-210" x2="156" y2="-210"/><line x1="144" y1="-270" x2="156" y2="-270"/>
+              <line x1="144" y1="-360" x2="156" y2="-360"/><line x1="144" y1="-460" x2="156" y2="-460"/>
+              <line x1="144" y1="-550" x2="156" y2="-550"/>
+            </g>
+            <text class="dim" x="162" y="-4">0 floor</text>
+            <text class="dim" x="162" y="-116">12 platform top</text>
+            <text class="dim" x="162" y="-206">21 battery tops</text>
+            <text class="dim" x="162" y="-266">27 controller bottom</text>
+            <text class="dim" x="162" y="-356">36 inverter bottom</text>
+            <text class="dim" x="162" y="-456">46 inverter top</text>
+            <text class="dim" x="162" y="-546">55 board top</text>
+
+            <line class="thinline" x1="0" y1="18" x2="130" y2="18"/>
+            <line class="thinline" x1="0" y1="12" x2="0" y2="24"/><line class="thinline" x1="130" y1="12" x2="130" y2="24"/>
+            <text class="dim" x="65" y="36" text-anchor="middle">13 in</text>
+          </g>
+        </svg>
